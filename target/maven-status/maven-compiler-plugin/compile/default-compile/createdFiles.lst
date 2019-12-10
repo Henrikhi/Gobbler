@@ -1,0 +1,9 @@
+gobbler\domain\Picture.class
+gobbler\controllers\DefaultController.class
+gobbler\controllers\AccountController.class
+gobbler\repositories\AccountRepository.class
+gobbler\repositories\PictureRepository.class
+gobbler\domain\Account.class
+gobbler\domain\Comment.class
+gobbler\MyApplication.class
+gobbler\domain\Gobble.class

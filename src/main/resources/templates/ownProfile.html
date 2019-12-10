@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title th:text="${gobbler.gobblerName}" >Gobbler</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>This is my own profile</div>
+
+
+        <div>
+            <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${gobbler.gobblerPath},id=${gobbler.profilePicture.id})}" height="200" width="200"/>
+            <p th:text="${gobbler.profilePicture.info}"></p>
+        </div>
+
+
+        <div>Here are all my photos</div>
+
+        <ul>
+            <li th:each="picture : ${gobbler.album}">
+                <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${gobbler.gobblerPath},id=${picture.id})}" height="200" width="200"/>
+                <p th:text="${picture.info}"></p>
+                <form th:method="DELETE" th:action="@{/gobblers/{gobblerPath}/delPicture/{id}(gobblerPath=${gobbler.gobblerPath},id=${picture.id})}">
+                    <input type="submit" value="Delete this picture."/>
+                </form>
+            </li>
+        </ul>
+
+        <p th:text="${message}"></p>
+
+        <form method="POST" th:action="@{/gobblers/{gobblerPath}/addPicture(gobblerPath=${gobbler.gobblerPath})}" enctype="multipart/form-data">
+            <p>Write info about this picture.</p>
+            <input type="text" name="info" id="info"/>
+            <input type="file" name="picture" id="picture"/>
+            <input type="submit" value="Add!"/>
+        </form>
+
+
+
+
+    </body>
+</html>

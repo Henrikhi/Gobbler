@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Gobbler</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <h1>Gobbler</h1>
+        <h2>Now gobbling:</h2>
+        <div>This is my own profile</div>
+
+
+        <a th:href="@{/gobblers/{gobblerPath}(gobblerPath=${gobbler.gobblerPath})}">
+            <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${gobbler.gobblerPath},id=${gobbler.profilePicture.id})}" alt="my picture" height="200" width="200" />
+        </a>
+
+
+
+        <form name='gobble' th:action="@{/gobblers/{gobblerPath}/gobbles(gobblerPath=${gobbler.gobblerPath})}" method='POST'>
+            <table>
+                <tr>
+                    <td>Do you feel like you have something to gobble?:</td>
+                    <td><input type='text' name='gobble' value=''></td>
+                </tr>
+                <tr>
+                    <td><input name="submit" type="submit" value="gobble!" /></td>
+                </tr>
+            </table>
+        </form>
+
+
+
+        <ul>
+            <li th:each="gobble : ${gobbler.gobbles}">
+                <p th:text="${gobble.content}"></p>
+            </li>
+        </ul>
+
+
+
+        <h2>*list of ten gobbles*</h2>
+
+        <h2>*you are now gobbling in page 1*</h2>
+        <h2>*Click here to go to the next page?*</h2>
+
+
+    </body>
+</html>
