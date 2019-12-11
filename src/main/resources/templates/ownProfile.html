@@ -11,19 +11,22 @@
 
 
         <div>
-            <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${gobbler.gobblerPath},id=${gobbler.profilePicture.id})}" height="200" width="200"/>
-            <p th:text="${gobbler.profilePicture.info}"></p>
+            <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${gobbler.gobblerPath},id=${picture.id})}" height="200" width="200"/>
+            <p th:text="${picture.info}"></p>
         </div>
 
 
         <div>Here are all my photos</div>
 
         <ul>
-            <li th:each="picture : ${gobbler.album}">
+            <li th:each="picture : ${pictures}">
                 <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${gobbler.gobblerPath},id=${picture.id})}" height="200" width="200"/>
                 <p th:text="${picture.info}"></p>
                 <form th:method="DELETE" th:action="@{/gobblers/{gobblerPath}/delPicture/{id}(gobblerPath=${gobbler.gobblerPath},id=${picture.id})}">
                     <input type="submit" value="Delete this picture."/>
+                </form>
+                <form th:method="POST" th:action="@{/gobblers/{gobblerPath}/setProfilePicture/{id}(gobblerPath=${gobbler.gobblerPath},id=${picture.id})}">
+                    <input type="submit" value="Set as profile picture."/>
                 </form>
             </li>
         </ul>

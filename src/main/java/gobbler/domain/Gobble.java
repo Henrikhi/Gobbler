@@ -26,6 +26,8 @@ public class Gobble extends AbstractPersistable<Long> {
     @OneToMany(targetEntity = Comment.class, fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Comment> comments = new ArrayList<>();
+    
+    private Long gobblerId;
 
     private String content;
     private LocalDateTime time;

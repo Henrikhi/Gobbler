@@ -19,17 +19,19 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 public class Picture extends AbstractPersistable<Long> {
 
-    @Lob
-    private byte[] content;
+    Long gobblerId;
+    String info;
+    boolean isProfilePicture;
 
-    private String info;
-    
     @OneToMany(targetEntity = Gobbler.class, fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Gobbler> likers = new ArrayList<>();
+    List<Gobbler> likers = new ArrayList<>();
 
     @OneToMany(targetEntity = Comment.class, fetch = FetchType.EAGER)
     @Fetch(value = FetchMode.SUBSELECT)
-    private List<Comment> comments = new ArrayList<>();
+    List<Comment> comments = new ArrayList<>();
+
+    @Lob
+    byte[] content;
 
 }

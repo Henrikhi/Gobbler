@@ -45,23 +45,23 @@ public class NewGobblerService {
             gobbler.setPassword(passwordEncoder.encode(password));
             gobbler.setGobblerPath(gobblerPath.toLowerCase());
 
+            gobblerRepository.save(gobbler);
+
             Picture picture = new Picture();
             picture.setInfo("Default gobbler picture.");
 
             String workingDirectory = System.getProperty("user.dir");
-            System.out.println(workingDirectory);
+//            System.out.println(workingDirectory);
 
             File file = new File("./src/main/resources/public/defaultPic.png");
 
             byte[] fileContent = Files.readAllBytes(file.toPath());
             picture.setContent(fileContent);
+            picture.setProfilePicture(true);
+            picture.setGobblerId(gobbler.getId());
 
             pictureRepository.save(picture);
 
-            gobbler.addPicture(picture);
-            gobbler.setProfilePicture(picture);
-
-            gobblerRepository.save(gobbler);
         }
 
         return errors;

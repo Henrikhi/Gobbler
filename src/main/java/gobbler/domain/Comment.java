@@ -14,7 +14,11 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 public class Comment extends AbstractPersistable<Long> {
 
-    private String comment;
-    private Timestamp timestamp;
+    String comment;
+    Timestamp timestamp;
+    
+    Long postId;
+    Long gobblerId;
+   
     
 }

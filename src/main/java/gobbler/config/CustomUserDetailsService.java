@@ -40,23 +40,21 @@ public class CustomUserDetailsService implements UserDetailsService {
             gobbler.setGobblerPath("kalkkuna");
             gobbler.setPassword(passwordEncoder.encode("kalkkuna"));
 
+            gobblerRepository.save(gobbler);
+
             Picture picture = new Picture();
             picture.setInfo("Default gobbler picture.");
 
             String workingDirectory = System.getProperty("user.dir");
-            System.out.println(workingDirectory);
 
             File file = new File("./src/main/resources/public/defaultPic.png");
 
             byte[] fileContent = Files.readAllBytes(file.toPath());
             picture.setContent(fileContent);
+            picture.setProfilePicture(true);
+            picture.setGobblerId(gobbler.getId());
 
             pictureRepository.save(picture);
-
-            gobbler.addPicture(picture);
-            gobbler.setProfilePicture(picture);
-
-            gobblerRepository.save(gobbler);
 
         }
     }

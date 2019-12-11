@@ -12,7 +12,7 @@
 
 
         <a th:href="@{/gobblers/{gobblerPath}(gobblerPath=${gobbler.gobblerPath})}">
-            <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${gobbler.gobblerPath},id=${gobbler.profilePicture.id})}" alt="my picture" height="200" width="200" />
+            <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${gobbler.gobblerPath},id=${picture.id})}" alt="my picture" height="200" width="200" />
         </a>
 
 
@@ -32,7 +32,7 @@
 
 
         <ul>
-            <li th:each="gobble : ${gobbler.gobbles}">
+            <li th:each="gobble : ${gobbles}">
                 <p th:text="${gobble.content}"></p>
             </li>
         </ul>
