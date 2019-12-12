@@ -6,7 +6,26 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
+    
+    <style th:replace="fragments/topBar :: topBarStyle"></style>
+    
     <body>
-        <div>This is the profile of a fellow gobbler, but not me!</div>
+        <div th:replace="fragments/topBar :: topBar"></div>
+        
+        
+        
+        <ul>
+            <li th:each="picture : ${pictures}">
+                <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${searchedGobbler.gobblerPath},id=${picture.id})}" height="200" width="200"/>
+                <p th:text="${picture.info}"></p>
+                <form th:method="POST" th:action="@{/gobblers/{gobblerPath}/images/{id}/peck(gobblerPath=${searchedGobbler.gobblerPath},id=${picture.id})}">
+                    <input type="submit" value="Peck this picture."/>
+                </form>
+            </li>
+        </ul>v
+        
+        
+        
+        
     </body>
 </html>

@@ -1,0 +1,53 @@
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <style th:fragment="topBarStyle">
+        body {margin:0;}
+
+        .navbar {
+            overflow: hidden;
+            background-color: #333;
+            position: fixed;
+            top: 0;
+            width: 100%;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .navbar a:hover {
+            background: #ddd;
+            color: black;
+        }
+
+        .main {
+            padding: 16px;
+            margin-top: 50px;
+            /*height: 150px;  Used in this example to enable scrolling */
+        }
+    </style>
+
+
+    <body>
+        <div class="navbar" th:fragment="topBar">
+            <h2 th:text="${loggedGobbler.gobblerName}" ></h2>
+            <a th:href="@{/gobblers/{gobblerPath}(gobblerPath=${loggedGobbler.gobblerPath})}">
+                <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${loggedGobbler.gobblerPath},id=${picture.id})}" alt="my picture" height="50" width="50" />
+            </a>
+            <a href="/feed">Feed</a>
+            <a href="/log out">Log out</a>
+        </div>
+    </body>
+</html>

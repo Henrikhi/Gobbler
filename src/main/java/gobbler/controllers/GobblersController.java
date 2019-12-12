@@ -56,24 +56,15 @@ public class GobblersController {
         String username = auth.getName();
 
         Gobbler loggedGobbler = gobblerRepository.findByGobblerName(username);
+        model.addAttribute("loggedGobbler", loggedGobbler);
+        model.addAttribute("picture", pictureRepository.findByGobblerIdAndIsProfilePicture(loggedGobbler.getId(), true));
 
         if (loggedGobbler.equals(searchedGobbler)) {
-            model.addAttribute("gobbler", loggedGobbler);
-            List<Picture> pictures = pictureRepository.findByGobblerId(loggedGobbler.getId());
-
-            for (int i = 0; i < pictures.size(); i++) {
-                if (pictures.get(i).isProfilePicture()) {
-                    model.addAttribute("picture", pictures.get(i));
-                    break;
-                }
-            }
-
-            model.addAttribute("pictures", pictures);
-
+            model.addAttribute("pictures", pictureRepository.findByGobblerId(loggedGobbler.getId()));
             return "ownProfile";
         } else {
-            model.addAttribute("loggedGobbler", loggedGobbler);
             model.addAttribute("searchedGobbler", searchedGobbler);
+            model.addAttribute("pictures", pictureRepository.findByGobblerId(searchedGobbler.getId()));
             return "gobblers";
         }
     }
@@ -148,21 +139,14 @@ public class GobblersController {
         } else {
             searchedGobbler = gobblerRepository.findByGobblerPath(gobblerPath);
         }
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-
-        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(username);
-
-        if (loggedGobbler.equals(searchedGobbler)) {
             Picture picture = pictureRepository.getOne(id);
 
-            List<Picture> pictures = pictureRepository.findByGobblerId(loggedGobbler.getId());
+            List<Picture> pictures = pictureRepository.findByGobblerId(searchedGobbler.getId());
 
             if (pictures.contains(picture)) {
                 return picture.getContent();
             }
-        }
+        
         return null;
     }
 
@@ -274,7 +258,7 @@ public class GobblersController {
             Gobble gobble = new Gobble();
             gobble.setContent(gobbleContent);
             gobble.setTime(LocalDateTime.now());
-            gobble.setGobblerId(loggedGobbler.getId());
+            gobble.setGobblerName(loggedGobbler.getGobblerName());
             gobbleRepository.save(gobble);
         }
 

@@ -1,6 +1,5 @@
 package gobbler.domain;
 
-import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,10 +10,12 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Gobble extends AbstractPersistable<Long> {
+public class Peck extends AbstractPersistable<Long> {
+
+    Long gobblerId;
+    Long pictureId;
+    Long gobbleId;
     
-    private String gobblerName;
-    private String content;
-    private LocalDateTime time;
+    
 
 }

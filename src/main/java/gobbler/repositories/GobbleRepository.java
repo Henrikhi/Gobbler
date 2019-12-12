@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GobbleRepository extends JpaRepository<Gobble, Long> {
     
-    List<Gobble> findByGobblerIdIn(Collection<Long> GobblerIds, Pageable pageable);
+    List<Gobble> findByGobblerNameIn(Collection<String> GobblerNames, Pageable pageable);
 
 }

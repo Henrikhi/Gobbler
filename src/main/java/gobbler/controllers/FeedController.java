@@ -40,18 +40,18 @@ public class FeedController {
 
         Gobbler gobbler = gobblerRepository.findByGobblerName(username);
 
-        model.addAttribute("gobbler", gobbler);
+        model.addAttribute("loggedGobbler", gobbler);
 
         Picture profilePicture = pictureRepository.findByGobblerIdAndIsProfilePicture(gobbler.getId(), true);
         model.addAttribute("picture", profilePicture);
 
         Pageable pageable = PageRequest.of(0, 25, Sort.by("time").descending());
-        List<Long> gobblerIds = new ArrayList<>();
-        gobblerIds.add(gobbler.getId());
+        List<String> gobblerNames = new ArrayList<>();
+        gobblerNames.add(gobbler.getGobblerName());
         
         //ADD THE IDS OF THE ACCOUNTS THE ACCOUNT FOLLOWS FOR THEIR POSTS AS WELL
         
-        List<Gobble> gobbles = gobbleRepository.findByGobblerIdIn(gobblerIds, pageable);
+        List<Gobble> gobbles = gobbleRepository.findByGobblerNameIn(gobblerNames, pageable);
         
         model.addAttribute("gobbles", gobbles);
 
@@ -72,12 +72,12 @@ public class FeedController {
         model.addAttribute("picture", profilePicture);
 
         Pageable pageable = PageRequest.of(index, 25, Sort.by("time").descending());
-        List<Long> gobblerIds = new ArrayList<>();
-        gobblerIds.add(gobbler.getId());
+        List<String> gobblerNames = new ArrayList<>();
+        gobblerNames.add(gobbler.getGobblerName());
         
         //ADD THE IDS OF THE ACCOUNTS THE ACCOUNT FOLLOWS FOR THEIR POSTS AS WELL
         
-        List<Gobble> gobbles = gobbleRepository.findByGobblerIdIn(gobblerIds, pageable);
+        List<Gobble> gobbles = gobbleRepository.findByGobblerNameIn(gobblerNames, pageable);
         
         model.addAttribute("gobbles", gobbles);
 

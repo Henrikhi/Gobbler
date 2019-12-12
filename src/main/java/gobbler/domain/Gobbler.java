@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,17 +22,4 @@ public class Gobbler extends AbstractPersistable<Long> {
     private String password;
     private String name;
     private String gobblerPath;
-
-    @OneToMany(targetEntity = Gobbler.class, fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Gobbler> followers = new ArrayList<>();
-
-    @OneToMany(targetEntity = Gobbler.class, fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
-    private List<Gobbler> following = new ArrayList<>();
-
-  
-    
-   
-    
 }
