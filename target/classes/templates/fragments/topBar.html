@@ -9,45 +9,60 @@
     <style th:fragment="topBarStyle">
         body {margin:0;}
 
-        .navbar {
+        nav {
             overflow: hidden;
-            background-color: #333;
+            background-color: #a5b1e8;
             position: fixed;
             top: 0;
             width: 100%;
+
         }
 
-        .navbar a {
+        nav a {
             float: left;
             display: block;
-            color: #f2f2f2;
+            color: #5e5e5e;
             text-align: center;
-            padding: 14px 16px;
+            padding: 0px 10px;
             text-decoration: none;
-            font-size: 17px;
+            font-size: 20px;
         }
 
-        .navbar a:hover {
-            background: #ddd;
+        nav a:hover {
+            background: #7d88b0;
             color: black;
         }
 
         .main {
-            padding: 16px;
+            padding: 30px;
             margin-top: 50px;
-            /*height: 150px;  Used in this example to enable scrolling */
         }
     </style>
 
 
     <body>
-        <div class="navbar" th:fragment="topBar">
-            <h2 th:text="${loggedGobbler.gobblerName}" ></h2>
-            <a th:href="@{/gobblers/{gobblerPath}(gobblerPath=${loggedGobbler.gobblerPath})}">
-                <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${loggedGobbler.gobblerPath},id=${picture.id})}" alt="my picture" height="50" width="50" />
+        <nav th:fragment="topBar">
+            <a th:href="@{/gobblers/{gobblerPath}(gobblerPath=${loggedGobbler.gobblerPath})}"> 
+                <div style="border: 2px solid black; padding: 5px;" >
+                    <img th:text="${loggedGobbler.gobblerName}" th:src="@{/images/{id}/content(id=${picture.id})}" alt="my picture" height="50" width="50" />
+                </div>
             </a>
-            <a href="/feed">Feed</a>
-            <a href="/log out">Log out</a>
-        </div>
+            <a href="/feed">
+                <div style="border: 2px solid black; padding: 21px;" >
+                    Feed
+                </div>
+            </a>
+            <a href="/logout">
+                <div style="border: 2px solid black; padding: 21px;" >
+                    Log out
+                </div>
+            </a>
+                <div style=" padding: 21px;" >
+                    <form method="GET" action="/search/">
+                        <input type="text" name="search" id="search"/>
+                        <input type="submit" value="Search"/>
+                    </form>
+                </div>
+        </nav>
     </body>
 </html>

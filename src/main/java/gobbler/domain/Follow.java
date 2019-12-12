@@ -14,8 +14,8 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 public class Follow extends AbstractPersistable<Long> {
 
-    Long FollowerId;
-    Long FollowingId;
+    Long followerId;
+    Long followingId;
     private LocalDateTime time;
     
     

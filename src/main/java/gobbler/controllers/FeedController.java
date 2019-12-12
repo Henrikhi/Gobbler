@@ -1,8 +1,10 @@
 package gobbler.controllers;
 
+import gobbler.domain.Follow;
 import gobbler.domain.Gobble;
 import gobbler.domain.Gobbler;
 import gobbler.domain.Picture;
+import gobbler.repositories.FollowRepository;
 import gobbler.repositories.GobbleRepository;
 import gobbler.repositories.GobblerRepository;
 import gobbler.repositories.PictureRepository;
@@ -32,53 +34,43 @@ public class FeedController {
     @Autowired
     private PictureRepository pictureRepository;
 
+    @Autowired
+    private FollowRepository followRepository;
+
     @RequestMapping("/feed")
-    public String feed(Model model) {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-
-        Gobbler gobbler = gobblerRepository.findByGobblerName(username);
-
-        model.addAttribute("loggedGobbler", gobbler);
-
-        Picture profilePicture = pictureRepository.findByGobblerIdAndIsProfilePicture(gobbler.getId(), true);
-        model.addAttribute("picture", profilePicture);
-
-        Pageable pageable = PageRequest.of(0, 25, Sort.by("time").descending());
-        List<String> gobblerNames = new ArrayList<>();
-        gobblerNames.add(gobbler.getGobblerName());
-        
-        //ADD THE IDS OF THE ACCOUNTS THE ACCOUNT FOLLOWS FOR THEIR POSTS AS WELL
-        
-        List<Gobble> gobbles = gobbleRepository.findByGobblerNameIn(gobblerNames, pageable);
-        
-        model.addAttribute("gobbles", gobbles);
-
-        return "feed";
+    public String feed() {
+        return "redirect:/feed/0";
     }
-    
+
     @RequestMapping("/feed/{index}")
-    public String feedIndex(Model model, @PathVariable int index) {
+    public String feedIndex(Model model, @PathVariable String index) {
+        int pageNum = 0;
+        if (index != null) {
+            try {
+                pageNum = Integer.parseInt(index);
+            } catch (NumberFormatException nfe) {
+                return "redirect:/feed/0";
+            }
+        }
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String username = auth.getName();
 
-        Gobbler gobbler = gobblerRepository.findByGobblerName(username);
-
-        model.addAttribute("gobbler", gobbler);
-
-        Picture profilePicture = pictureRepository.findByGobblerIdAndIsProfilePicture(gobbler.getId(), true);
+        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.getContext().
+                getAuthentication().getName());
+        Picture profilePicture = pictureRepository.findByGobblerIdAndIsProfilePicture(loggedGobbler.getId(), true);
+        
+        model.addAttribute("loggedGobbler", loggedGobbler);
         model.addAttribute("picture", profilePicture);
 
-        Pageable pageable = PageRequest.of(index, 25, Sort.by("time").descending());
-        List<String> gobblerNames = new ArrayList<>();
-        gobblerNames.add(gobbler.getGobblerName());
-        
-        //ADD THE IDS OF THE ACCOUNTS THE ACCOUNT FOLLOWS FOR THEIR POSTS AS WELL
-        
-        List<Gobble> gobbles = gobbleRepository.findByGobblerNameIn(gobblerNames, pageable);
-        
+        Pageable pageable = PageRequest.of(pageNum, 25, Sort.by("time").descending());
+        List<Long> gobblerIds = new ArrayList<>();
+        gobblerIds.add(loggedGobbler.getId());
+        followRepository.findWhoIFollow(loggedGobbler.getId());
+        gobblerIds.addAll(followRepository.findWhoIFollow(loggedGobbler.getId()));
+
+        List<Gobble> gobbles = gobbleRepository.findByGobblerIdIn(gobblerIds, pageable);
+
         model.addAttribute("gobbles", gobbles);
 
         return "feed";

@@ -1,7 +1,7 @@
 package gobbler.domain;
 
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,11 +14,10 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 public class Comment extends AbstractPersistable<Long> {
 
-    String comment;
-    Timestamp timestamp;
-    
-    Long postId;
     Long gobblerId;
+    String comment;
+    LocalDateTime time;
+    
    
     
 }

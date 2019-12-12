@@ -6,49 +6,50 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    
+
     <style th:replace="fragments/topBar :: topBarStyle"></style>
-    
-    
+
+
     <body>
         <div th:replace="fragments/topBar :: topBar"></div>
-        
-        
-        <div>This is my own profile</div>
+        <div class="main">
 
 
-        <div>
-            <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${loggedGobbler.gobblerPath},id=${picture.id})}" height="200" width="200"/>
-            <p th:text="${picture.info}"></p>
-        </div>
+            <div>This is my own profile</div>
 
 
-        <div>Here are all my photos</div>
-
-        <ul>
-            <li th:each="picture : ${pictures}">
-                <img th:src="@{/gobblers/{gobblerPath}/images/{id}/content(gobblerPath=${loggedGobbler.gobblerPath},id=${picture.id})}" height="200" width="200"/>
+            <div>
+                <img th:src="@{/images/{id}/content(id=${picture.id})}" height="200" width="200"/>
                 <p th:text="${picture.info}"></p>
-                <form th:method="DELETE" th:action="@{/gobblers/{gobblerPath}/delPicture/{id}(gobblerPath=${loggedGobbler.gobblerPath},id=${picture.id})}">
-                    <input type="submit" value="Delete this picture."/>
-                </form>
-                <form th:method="POST" th:action="@{/gobblers/{gobblerPath}/setProfilePicture/{id}(gobblerPath=${loggedGobbler.gobblerPath},id=${picture.id})}">
-                    <input type="submit" value="Set as profile picture."/>
-                </form>
-            </li>
-        </ul>
-
-        <p th:text="${message}"></p>
-
-        <form method="POST" th:action="@{/gobblers/{gobblerPath}/addPicture(gobblerPath=${loggedGobbler.gobblerPath})}" enctype="multipart/form-data">
-            <p>Write info about this picture.</p>
-            <input type="text" name="info" id="info"/>
-            <input type="file" name="picture" id="picture"/>
-            <input type="submit" value="Add!"/>
-        </form>
+            </div>
 
 
+            <div>Here are all my photos</div>
+
+            <ul>
+                <li th:each="picture : ${pictures}">
+                    <img th:src="@{/images/{id}/content(id=${picture.id})}" height="200" width="200"/>
+                    <p th:text="${picture.info}"></p>
+                    <form th:method="DELETE" th:action="@{/delPicture/{id}(id=${picture.id})}">
+                        <input type="submit" value="Delete this picture."/>
+                    </form>
+                    <form th:method="POST" th:action="@{/setProfilePicture/{id}(id=${picture.id})}">
+                        <input type="submit" value="Set as profile picture."/>
+                    </form>
+                </li>
+            </ul>
+
+            <p th:text="${message}"></p>
+
+            <form method="POST" th:action="@{/addPicture}" enctype="multipart/form-data">
+                <p>Write info about this picture.</p>
+                <input type="text" name="info" id="info"/>
+                <input type="file" name="picture" id="picture"/>
+                <input type="submit" value="Add!"/>
+            </form>
 
 
+
+        </div>
     </body>
 </html>

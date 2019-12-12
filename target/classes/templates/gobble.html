@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Gobbler</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <style th:replace="fragments/topBar :: topBarStyle"></style>
+
+    <body>
+        <div th:replace="fragments/topBar :: topBar"></div>
+        <div class="main">
+
+
+            <h1>This is a single gobble</h1>
+
+
+            <p th:text="${gobble.gobblerId}"></p>
+            <p th:text="${gobble.time}"></p>
+            <p th:text="${gobble.content}"></p>
+
+            <ul>
+                <li th:each="comment : ${gobble.comments}" >
+                    <p th:text="${comment.time}" ></p>
+                    <p th:text="${comment.comment}" ></p
+                </li>
+            </ul>
+
+
+            <form name='comment' th:action="@{/gobbles/{id}(id=${gobble.id})}" method='POST'>
+                <table>
+                    <tr>
+                        <td>Do you feel like you have something to gobble about this gobble?:</td>
+                        <td><input type='text' name='comment' value=''></td>
+                    </tr>
+                    <tr>
+                        <td><input name="submit" type="submit" value="gobble!" /></td>
+                    </tr>
+                </table>
+            </form>
+
+        </div>
+    </body>
+</html>
