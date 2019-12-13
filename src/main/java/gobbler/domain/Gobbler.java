@@ -22,4 +22,5 @@ public class Gobbler extends AbstractPersistable<Long> {
     private String password;
     private String name;
     private String gobblerPath;
+    private Long profilePictureId;
 }

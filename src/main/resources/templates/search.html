@@ -15,17 +15,41 @@
         <div class="main">
 
 
+
+
+            <h1>Matches by Gobbler name:</h1>
             <ul>
-                <li th:each="gobbler : ${gobblers}" >
+                <li th:each="gobbler : ${gobblersByGobblerName}" >
                     <a th:href="@{/gobblers/{gobblerPath}(gobblerPath=${gobbler.gobblerPath})}"> 
                         <p th:text="${gobbler.gobblerName}" ></p>
                         <p th:text="${gobbler.Name}" ></p>
                         <p th:text="${gobbler.gobblerPath}" ></p>
                     </a>
-
-
                 </li>
             </ul>
+            
+            <h1>Matches by name:</h1>
+            <ul>
+                <li th:each="gobbler : ${gobblersByName}" >
+                    <a th:href="@{/gobblers/{gobblerPath}(gobblerPath=${gobbler.gobblerPath})}"> 
+                        <p th:text="${gobbler.gobblerName}" ></p>
+                        <p th:text="${gobbler.Name}" ></p>
+                        <p th:text="${gobbler.gobblerPath}" ></p>
+                    </a>
+                </li>
+            </ul>
+            
+            <h1>Matches by Gobbler path:</h1>
+            <ul>
+                <li th:each="gobbler : ${gobblersByGobblerPath}" >
+                    <a th:href="@{/gobblers/{gobblerPath}(gobblerPath=${gobbler.gobblerPath})}"> 
+                        <p th:text="${gobbler.gobblerName}" ></p>
+                        <p th:text="${gobbler.Name}" ></p>
+                        <p th:text="${gobbler.gobblerPath}" ></p>
+                    </a>
+                </li>
+            </ul>
+            
 
 
 

@@ -79,6 +79,11 @@ public class CustomUserDetailsService implements UserDetailsService {
             picture2.setGobblerId(gobbler2.getId());
             pictureRepository.save(picture2);
             
+            gobbler.setProfilePictureId(picture.getId());
+            gobbler2.setProfilePictureId(picture2.getId());
+            gobblerRepository.save(gobbler);
+            gobblerRepository.save(gobbler2);
+            
 
         }
     }

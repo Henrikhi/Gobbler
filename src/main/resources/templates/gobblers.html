@@ -2,7 +2,7 @@
 
 <html>
     <head>
-        <title th:text="${searchedGobbler.gobblerName}" >Gobbler</title>
+        <title>All gobblers!</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
@@ -14,16 +14,20 @@
         <div class="main">
 
 
+            <h1>
+                This is a list of all the Gobblers in the Gobbler community!
+                
+            </h1>
 
             <ul>
-                <li th:each="picture : ${pictures}">
-                    <img th:src="@{/images/{id}/content(id=${picture.id})}" height="200" width="200"/>
-                    <p th:text="${picture.info}"></p>
-                    <form th:method="POST" th:action="@{/images/{id}/peck(id=${picture.id})}">
-                        <input type="submit" value="Peck this picture."/>
-                    </form>
+                <li th:each="gobbler : ${gobblers}">
+                    <a th:href="@{/gobblers/{id}(id=${gobbler.gobblerPath})}" >
+                    <img th:src="@{/images/{id}/content(id=${gobbler.profilePictureId})}" height="50" width="50"/>
+                    <p th:text="${gobbler.GobblerName}" ></p>
+                    <p th:text="${gobbler.Name}" ></p>
+                    </a>
                 </li>
-            </ul>v
+            </ul>
 
 
 

@@ -62,6 +62,9 @@ public class NewGobblerService {
 
             pictureRepository.save(picture);
 
+            gobbler.setProfilePictureId(picture.getId());
+            gobblerRepository.save(gobbler);
+
         }
 
         return errors;

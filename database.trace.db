@@ -1,6 +1,0 @@
-2019-12-12 20:30:21 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "REMOVE[*] * FROM GOBBLE "; expected "ROLLBACK, REVOKE, RUNSCRIPT, RELEASE, REPLACE, {"; SQL statement:
-remove * from gobble [42001-197]
-2019-12-12 20:30:48 jdbc[13]: exception
-org.h2.jdbc.JdbcSQLException: Table "GOBBLE_COMMENT" not found; SQL statement:
-select * from gobble_comment [42102-197]

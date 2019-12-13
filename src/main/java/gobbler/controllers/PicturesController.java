@@ -1,11 +1,16 @@
 package gobbler.controllers;
 
+import gobbler.domain.Comment;
+import gobbler.domain.Gobble;
 import gobbler.domain.Gobbler;
 import gobbler.domain.Picture;
+import gobbler.repositories.CommentRepository;
 import gobbler.repositories.GobblerRepository;
 import gobbler.repositories.PictureRepository;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
@@ -33,6 +38,9 @@ public class PicturesController {
 
     @Autowired
     private PictureRepository pictureRepository;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @ControllerAdvice
     public class MyErrorController extends ResponseEntityExceptionHandler {
@@ -85,7 +93,29 @@ public class PicturesController {
 
         Picture picture = pictureRepository.getOne(id);
         return picture.getContent();
+    }
 
+    @GetMapping("/images/{id}")
+    public String image(@PathVariable Long id, Model model) {
+        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.getContext().
+                getAuthentication().getName());
+
+        model.addAttribute("loggedGobbler", loggedGobbler);
+        model.addAttribute("picture", pictureRepository.findByGobblerIdAndIsProfilePicture(loggedGobbler.getId(), true));
+
+        Optional<Picture> picture = pictureRepository.findById(id);
+        if (picture.isPresent()) {
+            model.addAttribute("picture", pictureRepository.getOne(id));
+
+            if (picture.get().getGobblerId().equals(loggedGobbler.getId())) {
+                return "ownPicture";
+            } else {
+                model.addAttribute("searchedGobbler", gobblerRepository.findById(picture.get().getGobblerId()));
+                return "picture";
+            }
+        } else {
+            return "redirect:/feed";
+        }
     }
 
     @DeleteMapping("/delPicture/{id}")
@@ -97,9 +127,13 @@ public class PicturesController {
         if (pictureRepository.getOne(id) == null) {
             return "redirect:/home";
         }
+
+        List<Picture> pictures = pictureRepository.findByGobblerId(loggedGobbler.getId());
         Picture picture = pictureRepository.getOne(id);
-        if (!picture.isProfilePicture()) {
-            pictureRepository.delete(picture);
+        if (pictures.contains(picture)) {
+            if (!picture.isProfilePicture()) {
+                pictureRepository.delete(picture);
+            }
         }
 
         return "redirect:/home";
@@ -138,9 +172,41 @@ public class PicturesController {
 
             pictureRepository.save(oldPic);
             pictureRepository.save(newPic);
+
+            loggedGobbler.setProfilePictureId(newPic.getId());
+            gobblerRepository.save(loggedGobbler);
         }
 
         return "redirect:/home";
+    }
+
+    @PostMapping("/images/{id}/comment")
+    public String postComment(Model model, @PathVariable Long id,
+            @RequestParam("comment") String comment) {
+
+        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.getContext().
+                getAuthentication().getName());
+
+        if (comment == null || comment.trim().equals("")
+                || pictureRepository.getOne(id) == null) {
+            return "redirect:/feed";
+        }
+
+        if (comment.length() > 300) {
+            comment = comment.substring(0, 300);
+        }
+
+        Comment newComment = new Comment();
+        newComment.setComment(comment);
+        newComment.setGobblerId(loggedGobbler.getId());
+        newComment.setTime(LocalDateTime.now());
+        commentRepository.save(newComment);
+
+        Picture picture = pictureRepository.getOne(id);
+        picture.addComment(newComment);
+        pictureRepository.save(picture);
+
+        return "redirect:/images/" + id;
     }
 
 }

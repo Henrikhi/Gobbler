@@ -8,8 +8,8 @@ import gobbler.repositories.GobbleRepository;
 import gobbler.repositories.GobblerRepository;
 import gobbler.repositories.PictureRepository;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +37,6 @@ public class GobblesController {
     public String postGobble(Model model,
             @RequestParam("gobble") String gobbleContent) {
 
-
         Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.
                 getContext().getAuthentication().getName());
 
@@ -58,22 +57,33 @@ public class GobblesController {
     }
 
     @GetMapping("/gobbles/{id}")
-    public String getGobble(Model model, @PathVariable Long id) {
+    public String getGobble(Model model, @PathVariable String id) {
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-
-        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(username);
-
-        model.addAttribute("gobble", gobbleRepository.getOne(id));
+        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.getContext().
+                getAuthentication().getName());
         model.addAttribute("loggedGobbler", loggedGobbler);
-
         model.addAttribute("picture", pictureRepository.findByGobblerIdAndIsProfilePicture(loggedGobbler.getId(), true));
 
-        return "gobble";
+        Long searchedId = -1L;
+
+        if (id != null) {
+            try {
+                searchedId = Long.parseLong(id);
+            } catch (NumberFormatException nfe) {
+                return "redirect:/feed";
+            }
+        }
+
+        Optional<Gobble> gobble = gobbleRepository.findById(searchedId);
+        if (gobble.isPresent()) {
+            model.addAttribute("gobble", gobbleRepository.getOne(searchedId));
+            return "gobble";
+        } else {
+            return "redirect:/feed";
+        }
     }
 
-    @PostMapping("/gobbles/{id}")
+    @PostMapping("/gobbles/{id}/comment")
     public String postComment(Model model, @PathVariable Long id,
             @RequestParam("comment") String comment) {
 

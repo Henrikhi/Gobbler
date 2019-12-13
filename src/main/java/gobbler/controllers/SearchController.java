@@ -2,9 +2,11 @@ package gobbler.controllers;
 
 import gobbler.domain.Gobbler;
 import gobbler.repositories.GobblerRepository;
+import gobbler.repositories.PictureRepository;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,18 +19,32 @@ public class SearchController {
     @Autowired
     private GobblerRepository gobblerRepository;
 
-    @GetMapping("/search/{name}")
-    public String search(@PathVariable String name, Model model) {
+    @Autowired
+    private PictureRepository pictureRepository;
 
-        List<Gobbler> gobblers = new ArrayList<>();
+    @GetMapping("/search/{entry}")
+    public String search(@PathVariable String entry, Model model) {
 
-        model.addAttribute("gobblers", gobblers);
+        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.getContext().
+                getAuthentication().getName());
+
+        model.addAttribute("loggedGobbler", loggedGobbler);
+        model.addAttribute("picture", pictureRepository.findByGobblerIdAndIsProfilePicture(loggedGobbler.getId(), true));
+
+        model.addAttribute("gobblersByGobblerName", gobblerRepository.findByGobblerNameIgnoreCaseContaining(entry));
+        model.addAttribute("gobblersByName", gobblerRepository.findByNameIgnoreCaseContaining(entry));
+        model.addAttribute("gobblersByGobblerPath", gobblerRepository.findByGobblerPathIgnoreCaseContaining(entry));
         return "search";
     }
 
     @GetMapping("/search")
-    public String search2(@RequestParam String search) {
-        return "redirect:/search/" + search;
+    public String search2(@RequestParam String entry) {
+
+        if (entry == null || entry.trim().equals("")) {
+            return "redirect:/gobblers/";
+        }
+
+        return "redirect:/search/" + entry;
     }
 
 }
