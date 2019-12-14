@@ -57,12 +57,22 @@
                     Log out
                 </div>
             </a>
-                <div style=" padding: 21px;" >
-                    <form method="GET" action="/search/">
-                        <input type="text" name="entry" id="entry"/>
-                        <input type="submit" value="Search for a fellow Gobbler"/>
-                    </form>
+            <a href="/gobblers/">
+                <div style="border: 2px solid black; padding: 21px;" >
+                    All Gobblers
                 </div>
+            </a>
+            <a href="/follows/">
+                <div style="border: 2px solid black; padding: 21px;" >
+                    Follows
+                </div>
+            </a>
+            <div style=" padding: 21px;" >
+                <form method="GET" action="/search/">
+                    <input type="text" name="entry" id="entry"/>
+                    <input type="submit" value="Search for a fellow Gobbler"/>
+                </form>
+            </div>
         </nav>
     </body>
 </html>

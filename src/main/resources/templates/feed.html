@@ -13,16 +13,6 @@
         <div th:replace="fragments/topBar :: topBar"></div>
         <div class="main">
 
-            <h1>Gobbler</h1>
-            <h2>Now gobbling:</h2>
-            <div>This is my own profile</div>
-
-
-            <a th:href="@{/gobblers/{gobblerPath}(gobblerPath=${loggedGobbler.gobblerPath})}">
-                <img th:src="@{/images/{id}/content(id=${picture.id})}" alt="my picture" height="200" width="200" />
-            </a>
-
-
 
             <form name='gobble' th:action="@{/gobbles}" method='POST'>
                 <table>
@@ -40,31 +30,7 @@
 
             <ul>
                 <li th:each="gobble : ${gobbles}">
-                    <a th:href="@{/gobbles/{id}(id=${gobble.id})}" >
-                        <p th:text="${gobble.gobbler.gobblerName}"></p>
-                        <p th:text="${gobble.time}"></p>
-                        <p th:text="${gobble.content}"></p>
-
-
-                        <ul>
-                            <li th:each="comment : ${gobble.comments}">
-                                <span th:text="${comment.gobbler.gobblerName}"></span>
-                                <span th:text="${comment.time}"></span>
-                                <span th:text="${comment.comment}"></span>
-                            </li>
-                        </ul>
-                    </a>
-                    <form name='comment' th:action="@{/gobbles/{id}/comment(id=${gobble.id})}" method='POST'>
-                        <table>
-                            <tr>
-                                <td>Do you feel like you have something to gobble about this gobble?:</td>
-                                <td><input type='text' name='comment' value=''></td>
-                            </tr>
-                            <tr>
-                                <td><input name="submit" type="submit" value="gobble!" /></td>
-                            </tr>
-                        </table>
-                    </form>
+                    <div th:replace="fragments/gobbleFrag :: gobble" ></div>
                 </li>
             </ul>
         </div>

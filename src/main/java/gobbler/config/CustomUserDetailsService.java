@@ -62,7 +62,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             
 
             String workingDirectory = System.getProperty("user.dir");
-            File file = new File("./src/main/resources/public/defaultPic.png");
+            File file = new File("./src/main/resources/public/profile.png");
             byte[] fileContent = Files.readAllBytes(file.toPath());
 
             Picture picture = new Picture();

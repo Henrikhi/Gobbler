@@ -22,8 +22,8 @@
                 <li th:each="follow : ${followers}">
                     <a th:href="@{/gobblers/{id}(id=${follow.follower.gobblerPath})}" >
                         <img th:src="@{/images/{id}/content(id=${follow.follower.profilePictureId})}" height="50" width="50"/>
-                        <p th:text="${follow.follower.GobblerName}" ></p>
-                        <p th:text="${follow.time}" ></p>
+                        <p>Gobbler name: <span th:text="${follow.follower.GobblerName}" > </span></p>
+                        <p>Started follow: <span th:text="${follow.time}" ></span></p>
                     </a>
                     <form name='block' th:action="@{/block/{id}(id=${follow.follower.id})}" method='POST'>
                         <input name="submit" type="submit" value="block" />
@@ -40,8 +40,8 @@
                 <li th:each="follow : ${followings}">
                     <a th:href="@{/gobblers/{id}(id=${follow.following.gobblerPath})}" >
                         <img th:src="@{/images/{id}/content(id=${follow.following.profilePictureId})}" height="50" width="50"/>
-                        <p th:text="${follow.following.GobblerName}" ></p>
-                        <p th:text="${follow.time}" ></p>
+                         <p>Gobbler name: <span th:text="${follow.following.GobblerName}" > </span></p>
+                        <p>Started follow: <span th:text="${follow.time}" ></span></p>
                     </a>
                     <form name='unfollow' th:action="@{/unfollow/{id}(id=${follow.following.id})}" method='POST'>
                         <input name="submit" type="submit" value="unfollow" />

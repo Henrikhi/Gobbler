@@ -6,7 +6,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body>
+    <body style="padding:30px" >
         <h1>Only a few steps until You can begin gobbling!</h1>
 
         <ul>
@@ -14,12 +14,6 @@
                 <span th:text="${message}">error message</span>
             </li>
         </ul>
-
-
-
-
-
-
         <form name='newGobbler' action="/newGobbler" method='POST'>
             <table>
                 <tr>
@@ -61,11 +55,8 @@
             }
         </script>
 
-
-
         <h2>Already have a Gobbler account?</h2>
         <a href="/login">Continue gobbling!</a>
-
 
     </body>
 </html>

@@ -16,15 +16,15 @@
 
             <h1>
                 This is a list of all the Gobblers in the Gobbler community!
-                
+
             </h1>
 
             <ul>
                 <li th:each="gobbler : ${gobblers}">
                     <a th:href="@{/gobblers/{id}(id=${gobbler.gobblerPath})}" >
-                    <img th:src="@{/images/{id}/content(id=${gobbler.profilePictureId})}" height="50" width="50"/>
-                    <p th:text="${gobbler.GobblerName}" ></p>
-                    <p th:text="${gobbler.Name}" ></p>
+                        <img th:src="@{/images/{id}/content(id=${gobbler.profilePictureId})}" height="50" width="50"/>
+                        <p>Gobbler name: <span th:text="${gobbler.GobblerName}" ></span></p>
+                        <p>Name: <span th:text="${gobbler.Name}" ></span></p>
                     </a>
                 </li>
             </ul>

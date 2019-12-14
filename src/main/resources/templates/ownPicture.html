@@ -14,7 +14,7 @@
 
             <img th:src="@{/images/{id}/content(id=${picture.id})}" height="200" width="200"/>
             <p th:text="${picture.info}"></p>
-            
+
             <form th:method="DELETE" th:action="@{/delPicture/{id}(id=${picture.id})}">
                 <input type="submit" value="Delete this picture."/>
             </form>
@@ -30,11 +30,13 @@
             </form>
             <ul>
                 <li th:each="comment : ${picture.comments}" >
+                    <a th:href="@{/gobblers/{id}(id=${comment.gobbler.gobblerPath})}" >
+                        <img th:src="@{/images/{id}/content(id=${comment.gobbler.profilePictureId})}" height="50" width="50" th:text="${comment.gobbler.gobblerName}"/>
+                    </a>
                     <p th:text="${comment.time}" ></p>
                     <p th:text="${comment.comment}" ></p>
                 </li>
             </ul>
-
         </div>
     </body>
 </html>

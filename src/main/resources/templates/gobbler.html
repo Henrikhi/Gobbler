@@ -9,9 +9,18 @@
 
     <style th:replace="fragments/topBar :: topBarStyle"></style>
 
+
+
     <body>
         <div th:replace="fragments/topBar :: topBar"></div>
         <div class="main">
+
+            <div>
+                <p>Hello, and welcome to my channel!</p>
+                <img th:src="@{/images/{id}/content(id=${searchedGobbler.profilePictureId})}" height="200" width="200"/>
+                <p>Gobbler name: <span th:text="${searchedGobbler.gobblerName}"></span></p>
+                <p>Name: <span th:text="${searchedGobbler.name}"></span></p>
+            </div>
 
 
             <div th:if="${IFollow}">
@@ -41,8 +50,10 @@
 
             <ul>
                 <li th:each="picture : ${pictures}">
-                    <img th:src="@{/images/{id}/content(id=${picture.id})}" height="200" width="200"/>
-                    <p th:text="${picture.info}"></p>
+                    <a th:href="@{/images/{id}(id=${picture.id})}" >
+                        <img th:src="@{/images/{id}/content(id=${picture.id})}" height="200" width="200"/>
+                        <p th:text="${picture.info}"></p>
+                    </a>
                     <form th:method="POST" th:action="@{/images/{id}/comment(id=${picture.id})}">
                         <input type='text' name='comment' value=''>
                         <input type="submit" value="Comment."/>
@@ -52,6 +63,9 @@
                     </form>
                     <ul>
                         <li th:each="comment : ${picture.comments}" >
+                            <a th:href="@{/gobblers/{id}(id=${comment.gobbler.gobblerPath})}" >
+                                <img th:src="@{/images/{id}/content(id=${comment.gobbler.profilePictureId})}" height="50" width="50" th:text="${comment.gobbler.gobblerName}"/>
+                            </a>
                             <p th:text="${comment.time}" ></p>
                             <p th:text="${comment.comment}" ></p>
                         </li>
@@ -87,31 +101,7 @@
 
             <ul>
                 <li th:each="gobble : ${gobbles}">
-                    <a th:href="@{/gobbles/{id}(id=${gobble.id})}" >
-                        <img th:src="@{/images/{id}/content(id=${gobble.gobbler.profilePictureId})}" height="50" width="50"/>
-                        <p th:text="${gobble.gobbler.gobblerName}"></p>
-                        <p th:text="${gobble.time}"></p>
-                        <p th:text="${gobble.content}"></p>
-
-                        <ul>
-                            <li th:each="comment : ${gobble.comments}">
-                                <span th:text="${comment.gobbler.gobblerName}"></span>
-                                <span th:text="${comment.time}"></span>
-                                <span th:text="${comment.comment}"></span>
-                            </li>
-                        </ul>
-                    </a>
-                    <form name='comment' th:action="@{/gobbles/{id}/comment(id=${gobble.id})}" method='POST'>
-                        <table>
-                            <tr>
-                                <td>Do you feel like you have something to gobble about this gobble?:</td>
-                                <td><input type='text' name='comment' value=''></td>
-                            </tr>
-                            <tr>
-                                <td><input name="submit" type="submit" value="gobble!" /></td>
-                            </tr>
-                        </table>
-                    </form>
+                    <div th:replace="fragments/gobbleFrag :: gobble" ></div>
                 </li>
             </ul>
         </div>

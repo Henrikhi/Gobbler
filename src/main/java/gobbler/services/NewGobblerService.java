@@ -53,7 +53,7 @@ public class NewGobblerService {
             String workingDirectory = System.getProperty("user.dir");
 //            System.out.println(workingDirectory);
 
-            File file = new File("./src/main/resources/public/defaultPic.png");
+            File file = new File("./src/main/resources/public/profile.png");
 
             byte[] fileContent = Files.readAllBytes(file.toPath());
             picture.setContent(fileContent);
@@ -129,8 +129,8 @@ public class NewGobblerService {
                 || name.substring(name.length() - 1, name.length()).equals(" ")) {
             errors.add("Name must not contain two white spaces in a row.");
         }
-        if (name.length() < 10 || name.length() > 25) {
-            errors.add("Name must be between 10 and 15 characters long.");
+        if (name.length() < 5 || name.length() > 25) {
+            errors.add("Name must be between 5 and 15 characters long.");
         }
         String specialCharacter = containsSpecialCharacters(name);
         if (!specialCharacter.equals("")) {
