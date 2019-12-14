@@ -2,7 +2,7 @@ package gobbler.domain;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,9 +14,12 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 public class Follow extends AbstractPersistable<Long> {
 
-    Long followerId;
-    Long followingId;
-    private LocalDateTime time;
-    
-    
+    @ManyToOne
+    Gobbler follower;
+
+    @ManyToOne
+    Gobbler following;
+
+    LocalDateTime time;
+
 }

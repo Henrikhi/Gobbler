@@ -55,8 +55,8 @@ public class CustomUserDetailsService implements UserDetailsService {
             gobblerRepository.save(gobbler2);
             
             Follow follow = new Follow();
-            follow.setFollowerId(gobbler.getId());
-            follow.setFollowingId(gobbler2.getId());
+            follow.setFollower(gobbler);
+            follow.setFollowing(gobbler2);
             follow.setTime(LocalDateTime.now());
             followRepository.save(follow);
             

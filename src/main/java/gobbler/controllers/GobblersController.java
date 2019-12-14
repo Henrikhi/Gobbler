@@ -1,5 +1,6 @@
 package gobbler.controllers;
 
+import gobbler.domain.Follow;
 import gobbler.domain.Gobble;
 import gobbler.domain.Gobbler;
 import gobbler.repositories.FollowRepository;
@@ -67,11 +68,8 @@ public class GobblersController {
         if (loggedGobbler.equals(searchedGobbler)) {
             model.addAttribute("pictures", pictureRepository.findByGobblerId(loggedGobbler.getId()));
 
-            List<Long> followerIds = followRepository.findWhoFollowsMe(loggedGobbler.getId());
-            List<Long> followingIds = followRepository.findWhoIFollow(loggedGobbler.getId());
-
-            List<Gobbler> followers = gobblerRepository.findByIdIn(followerIds);
-            List<Gobbler> following = gobblerRepository.findByIdIn(followingIds);
+            List<Gobbler> followers = followRepository.findWhoFollowsMe(loggedGobbler.getId());
+            List<Gobbler> following = followRepository.findWhoIFollow(loggedGobbler.getId());
 
             model.addAttribute("followers", followers);
             model.addAttribute("following", following);
@@ -86,11 +84,8 @@ public class GobblersController {
             model.addAttribute("searchedGobbler", searchedGobbler);
             model.addAttribute("pictures", pictureRepository.findByGobblerId(searchedGobbler.getId()));
 
-            List<Long> followerIds = followRepository.findWhoFollowsMe(searchedGobbler.getId());
-            List<Long> followingIds = followRepository.findWhoIFollow(searchedGobbler.getId());
-
-            List<Gobbler> followers = gobblerRepository.findByIdIn(followerIds);
-            List<Gobbler> following = gobblerRepository.findByIdIn(followingIds);
+            List<Gobbler> followers = followRepository.findWhoFollowsMe(searchedGobbler.getId());
+            List<Gobbler> following = followRepository.findWhoIFollow(searchedGobbler.getId());
 
             model.addAttribute("followers", followers);
             model.addAttribute("following", following);
@@ -98,6 +93,19 @@ public class GobblersController {
             List<Gobble> gobbles = gobbleRepository.findByGobblerId(searchedGobbler.getId(), pageable);
 
             model.addAttribute("gobbles", gobbles);
+
+            Follow follow = followRepository.findByFollowerAndFollowing(loggedGobbler, searchedGobbler);
+            if (follow == null) {
+                model.addAttribute("IDontFollow", true);
+            } else {
+                model.addAttribute("IFollow", true);
+            }
+            follow = followRepository.findByFollowerAndFollowing(searchedGobbler, loggedGobbler);
+            if (follow == null) {
+//                model.addAttribute("DoesntFollowMe", true);
+            } else {
+                model.addAttribute("FollowsMe", true);
+            }
 
             return "gobbler";
         }

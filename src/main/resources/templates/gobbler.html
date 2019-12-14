@@ -14,6 +14,30 @@
         <div class="main">
 
 
+            <div th:if="${IFollow}">
+                <p>I am currently following this Gobbler.</p>
+                <form name='unfollow' th:action="@{/unfollow/{id}(id=${searchedGobbler.id})}" method='POST'>
+                    <input name="submit" type="submit" value="unfollow" />
+                </form>
+            </div>
+
+            <div th:if="${IDontFollow}">
+                <p>I am not currently following this Gobbler.
+                <form name='follow' th:action="@{/follow/{id}(id=${searchedGobbler.id})}" method='POST'>
+                    <input name="submit" type="submit" value="follow" />
+                </form>
+            </div>
+
+            <div th:if="${FollowsMe}">
+                <p>This Gobbler is currently following me.</p>
+                <form name='block' th:action="@{/block/{id}(id=${searchedGobbler.id})}" method='POST'>
+                    <input name="submit" type="submit" value="block" />
+                </form>
+            </div>
+
+
+
+
 
             <ul>
                 <li th:each="picture : ${pictures}">
@@ -89,8 +113,6 @@
                     </form>
                 </li>
             </ul>
-
-
         </div>
     </body>
 </html>

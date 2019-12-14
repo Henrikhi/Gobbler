@@ -1,6 +1,5 @@
 package gobbler.controllers;
 
-import gobbler.domain.Follow;
 import gobbler.domain.Gobble;
 import gobbler.domain.Gobbler;
 import gobbler.domain.Picture;
@@ -59,15 +58,19 @@ public class FeedController {
         Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.getContext().
                 getAuthentication().getName());
         Picture profilePicture = pictureRepository.findByGobblerIdAndIsProfilePicture(loggedGobbler.getId(), true);
-        
+
         model.addAttribute("loggedGobbler", loggedGobbler);
         model.addAttribute("picture", profilePicture);
 
         Pageable pageable = PageRequest.of(pageNum, 25, Sort.by("time").descending());
+
         List<Long> gobblerIds = new ArrayList<>();
         gobblerIds.add(loggedGobbler.getId());
-        followRepository.findWhoIFollow(loggedGobbler.getId());
-        gobblerIds.addAll(followRepository.findWhoIFollow(loggedGobbler.getId()));
+        
+        List<Gobbler> whoIFollow = followRepository.findWhoIFollow(loggedGobbler.getId());
+        whoIFollow.forEach(gobbler -> {
+            gobblerIds.add(gobbler.getId());
+        });
 
         List<Gobble> gobbles = gobbleRepository.findByGobblerIdIn(gobblerIds, pageable);
 
