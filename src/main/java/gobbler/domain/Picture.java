@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,9 +31,24 @@ public class Picture extends AbstractPersistable<Long> {
     @Fetch(value = FetchMode.SUBSELECT)
     private List<Comment> comments = new ArrayList<>();
 
+    @ManyToMany(targetEntity = Gobbler.class, fetch = FetchType.EAGER)
+    private List<Gobbler> peckers = new ArrayList<>();
+
     public void addComment(Comment comment) {
         if (!this.comments.contains(comment)) {
             this.comments.add(comment);
+        }
+    }
+
+    public void peck(Gobbler gobbler) {
+        if (!this.getPeckers().contains(gobbler)) {
+            this.peckers.add(gobbler);
+        }
+    }
+    
+    public void unpeck(Gobbler gobbler) {
+        if (this.getPeckers().contains(gobbler)) {
+            this.peckers.remove(gobbler);
         }
     }
 

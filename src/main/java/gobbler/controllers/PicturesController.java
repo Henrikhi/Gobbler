@@ -209,4 +209,60 @@ public class PicturesController {
         return "redirect:/images/" + id;
     }
 
+    @PostMapping("/images/{id}/peck")
+    public String peck(Model model, @PathVariable Long id) {
+
+        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.getContext().
+                getAuthentication().getName());
+
+        if (pictureRepository.getOne(id) == null) {
+            return "redirect:/feed";
+        }
+
+        Picture picture = pictureRepository.getOne(id);
+        picture.peck(loggedGobbler);
+        pictureRepository.save(picture);
+
+        return "redirect:/images/" + id;
+    }
+
+    @PostMapping("/images/{id}/unpeck")
+    public String unpeck(Model model, @PathVariable Long id) {
+
+        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.getContext().
+                getAuthentication().getName());
+
+        if (pictureRepository.getOne(id) == null) {
+            return "redirect:/feed";
+        }
+
+        Picture picture = pictureRepository.getOne(id);
+        picture.unpeck(loggedGobbler);
+        pictureRepository.save(picture);
+
+        return "redirect:/images/" + id;
+    }
+
+    @GetMapping("/images/{id}/pecks")
+    public String pecks(Model model, @PathVariable Long id) {
+
+        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.getContext().
+                getAuthentication().getName());
+        model.addAttribute("loggedGobbler", loggedGobbler);
+        model.addAttribute("picture", pictureRepository.findByGobblerIdAndIsProfilePicture(loggedGobbler.getId(), true));
+
+        if (pictureRepository.getOne(id) == null) {
+            return "redirect:/feed";
+        }
+
+        Picture picture = pictureRepository.getOne(id);
+        List<Gobbler> peckers = picture.getPeckers();
+        model.addAttribute("isPicture", true);
+        model.addAttribute("isGobble", false);
+        model.addAttribute("picture", picture);
+        model.addAttribute("peckers", peckers);
+
+        return "peckers";
+    }
+
 }

@@ -69,7 +69,7 @@ public class FollowController {
             followRepository.save(follow);
         }
 
-        return "redirect:/home";
+        return "redirect:/gobblers/" + gobbler.getGobblerPath();
     }
 
     @PostMapping("/unfollow/{id}")
@@ -94,7 +94,7 @@ public class FollowController {
             followRepository.delete(follow);
         }
 
-        return "redirect:/home";
+        return "redirect:/gobblers/" + gobbler.getGobblerPath();
     }
 
     @PostMapping("/block/{id}")
@@ -119,7 +119,7 @@ public class FollowController {
             followRepository.delete(follow);
         }
 
-        return "redirect:/home";
+        return "redirect:/gobblers/" + gobbler.getGobblerPath();
     }
 
 }

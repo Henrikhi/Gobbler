@@ -10,22 +10,29 @@
 
 
         <div th:fragment="gobble">
-
             <a th:href="@{/gobblers/{id}(id=${gobble.gobbler.gobblerPath})}" >
-                <img th:src="@{/images/{id}/content(id=${gobble.gobbler.profilePictureId})}" height="50" width="50"/>
-                <p th:text="${gobble.gobbler.gobblerName}"></p>
+                <img th:src="@{/images/{id}/content(id=${gobble.gobbler.profilePictureId})}" height="50" width="50" th:text="${gobble.gobbler.gobblerName}"/>
             </a>
             <a th:href="@{/gobbles/{id}(id=${gobble.id})}" >
-                <p th:text="${gobble.time}"></p>
-                <p th:text="${gobble.content}"></p>
+                <p>Posted: <span th:text="${gobble.time}"></span></p>
             </a>
+            <h3 th:text="${gobble.content}"></h3>
+            <a th:href="@{/gobbles/{id}/pecks(id=${gobble.id})}" >
+                <p> Pecks: <span th:text="${#lists.size(gobble.peckers)}">[Peckers]</span></p>
+            </a>
+            <form name='peck' th:action="@{/gobbles/{id}/peck(id=${gobble.id})}" method='POST'>
+                <input name="submit" type="submit" value="peck" />
+            </form>
+            <form name='unpeck' th:action="@{/gobbles/{id}/unpeck(id=${gobble.id})}" method='POST'>
+                <input name="submit" type="submit" value="unpeck" />
+            </form>
             <ul>
-                <li th:each="comment : ${gobble.comments}" >
+                <li th:each="comment : ${gobble.comments}"  style="margin-top: 30px;" >                    
                     <a th:href="@{/gobblers/{id}(id=${comment.gobbler.gobblerPath})}" >
                         <img th:src="@{/images/{id}/content(id=${comment.gobbler.profilePictureId})}" height="50" width="50" th:text="${comment.gobbler.gobblerName}"/>
                     </a>
-                    <p th:text="${comment.time}" ></p>
-                    <p th:text="${comment.comment}" ></p>
+                    <p>Posted: <span th:text="${gobble.time}"></span></p>
+                    <h5 th:text="${comment.comment}" ></h5>
                 </li>
             </ul>
             <form name='comment' th:action="@{/gobbles/{id}/comment(id=${gobble.id})}" method='POST'>

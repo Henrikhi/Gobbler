@@ -22,8 +22,9 @@
                 <li th:each="gobbler : ${gobblersByGobblerName}" >
                     <a th:href="@{/gobblers/{id}(id=${gobbler.gobblerPath})}" >
                         <img th:src="@{/images/{id}/content(id=${gobbler.profilePictureId})}" height="50" width="50"/>
-                        <p th:text="${gobbler.GobblerName}" ></p>
-                        <p th:text="${gobbler.Name}" ></p>
+                        <p>Gobbler name: <span th:text="${gobbler.GobblerName}" ></span></p>
+                        <p>Name: <span th:text="${gobbler.name}" ></span></p>
+                        <p>Path: <span th:text="${gobbler.GobblerPath}" ></span></p>
                     </a>
                 </li>
             </ul>
@@ -33,8 +34,9 @@
                 <li th:each="gobbler : ${gobblersByName}" >
                     <a th:href="@{/gobblers/{id}(id=${gobbler.gobblerPath})}" >
                         <img th:src="@{/images/{id}/content(id=${gobbler.profilePictureId})}" height="50" width="50"/>
-                        <p th:text="${gobbler.GobblerName}" ></p>
-                        <p th:text="${gobbler.Name}" ></p>
+                        <p>Gobbler name: <span th:text="${gobbler.GobblerName}" ></span></p>
+                        <p>Name: <span th:text="${gobbler.name}" ></span></p>
+                        <p>Path: <span th:text="${gobbler.GobblerPath}" ></span></p>
                     </a>
                 </li>
             </ul>
@@ -44,8 +46,9 @@
                 <li th:each="gobbler : ${gobblersByGobblerPath}" >
                     <a th:href="@{/gobblers/{id}(id=${gobbler.gobblerPath})}" >
                         <img th:src="@{/images/{id}/content(id=${gobbler.profilePictureId})}" height="50" width="50"/>
-                        <p th:text="${gobbler.GobblerName}" ></p>
-                        <p th:text="${gobbler.Name}" ></p>
+                        <p>Gobbler name: <span th:text="${gobbler.GobblerName}" ></span></p>
+                        <p>Name: <span th:text="${gobbler.name}" ></span></p>
+                        <p>Path: <span th:text="${gobbler.GobblerPath}" ></span></p>
                     </a>
                 </li>
             </ul>

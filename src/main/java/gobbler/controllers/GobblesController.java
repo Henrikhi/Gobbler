@@ -8,6 +8,7 @@ import gobbler.repositories.GobbleRepository;
 import gobbler.repositories.GobblerRepository;
 import gobbler.repositories.PictureRepository;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -109,7 +110,71 @@ public class GobblesController {
         gobble.addComment(newComment);
         gobbleRepository.save(gobble);
 
-        return "redirect:/feed";
+        return "redirect:/gobbles/" + gobble.getId();
+    }
+
+    @PostMapping("/gobbles/{id}/peck")
+    public String peck(Model model, @PathVariable Long id) {
+
+        System.out.println("testi1");
+
+        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.getContext().
+                getAuthentication().getName());
+
+        System.out.println("testi2");
+
+        if (gobbleRepository.getOne(id) == null) {
+            return "redirect:/feed";
+        }
+
+        System.out.println("testi3");
+
+        Gobble gobble = gobbleRepository.getOne(id);
+        gobble.peck(loggedGobbler);
+        gobbleRepository.save(gobble);
+
+        System.out.println("testi4");
+
+        return "redirect:/gobbles/" + id;
+    }
+
+    @PostMapping("/gobbles/{id}/unpeck")
+    public String unpeck(Model model, @PathVariable Long id) {
+
+        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.getContext().
+                getAuthentication().getName());
+
+        if (gobbleRepository.getOne(id) == null) {
+            return "redirect:/feed";
+        }
+
+        Gobble gobble = gobbleRepository.getOne(id);
+        gobble.unpeck(loggedGobbler);
+        gobbleRepository.save(gobble);
+
+        return "redirect:/gobbles/" + id;
+    }
+
+    @GetMapping("/gobbles/{id}/pecks")
+    public String pecks(Model model, @PathVariable Long id) {
+
+        Gobbler loggedGobbler = gobblerRepository.findByGobblerName(SecurityContextHolder.getContext().
+                getAuthentication().getName());
+        model.addAttribute("loggedGobbler", loggedGobbler);
+        model.addAttribute("picture", pictureRepository.findByGobblerIdAndIsProfilePicture(loggedGobbler.getId(), true));
+
+        if (gobbleRepository.getOne(id) == null) {
+            return "redirect:/feed";
+        }
+
+        Gobble gobble = gobbleRepository.getOne(id);
+        List<Gobbler> peckers = gobble.getPeckers();
+        model.addAttribute("isGobble", true);
+        model.addAttribute("isPicture", false);
+        model.addAttribute("gobble", gobble);
+        model.addAttribute("peckers", peckers);
+
+        return "peckers";
     }
 
 }

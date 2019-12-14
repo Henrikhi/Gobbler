@@ -25,6 +25,7 @@
                         <img th:src="@{/images/{id}/content(id=${gobbler.profilePictureId})}" height="50" width="50"/>
                         <p>Gobbler name: <span th:text="${gobbler.GobblerName}" ></span></p>
                         <p>Name: <span th:text="${gobbler.Name}" ></span></p>
+                        <p>Path: <span th:text="${gobbler.gobblerPath}" ></span></p>
                     </a>
                 </li>
             </ul>

@@ -30,6 +30,16 @@
                         <img th:src="@{/images/{id}/content(id=${picture.id})}" height="200" width="200"/>
                         <p th:text="${picture.info}"></p>
                     </a>
+                    <a th:href="@{/images/{id}/pecks(id=${picture.id})}" >
+                        <p> Pecks: <span th:text="${#lists.size(picture.peckers)}">[Peckers]</span></p>
+                    </a>
+                    <form name='peck' th:action="@{/images/{id}/peck(id=${picture.id})}" method='POST'>
+                        <input name="submit" type="submit" value="peck" />
+                    </form>
+                    <form name='unpeck' th:action="@{/images/{id}/unpeck(id=${picture.id})}" method='POST'>
+                        <input name="submit" type="submit" value="unpeck" />
+                    </form>
+
                     <form th:method="DELETE" th:action="@{/delPicture/{id}(id=${picture.id})}">
                         <input type="submit" value="Delete this picture."/>
                     </form>
@@ -91,7 +101,7 @@
             <h3>My latest gobbles.</h3>
 
             <ul>
-                <li th:each="gobble : ${gobbles}">
+                <li th:each="gobble : ${gobbles}" style="margin-top: 100px;">
                     <div th:replace="fragments/gobbleFrag :: gobble" ></div>
                 </li>
             </ul>
