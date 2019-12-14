@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Gobbler error :(</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    
+    
+    <h1>Oh no! Looks like something went wrong.</h1>
+    
+    
+    <ul>
+                <li>
+                    <a href="/feed">Click here to return to your feed.</a>
+                </li>
+                <li>
+                    <a href="/logout">Click here to log out.</a>
+                </li>
+                <li>
+                    <a href="/login">Click here to log in.</a>
+                </li>
+            </ul>
+
+    <style th:replace="fragments/topBar :: topBarStyle"></style>
+
+    <body>
+        <div th:replace="fragments/topBar :: topBar"></div>
+        <div class="main">
+
+
+
+            
+
+            <h2 th:if="${message != null}" th:text="${message}">Error message</h2>
+
+
+            
+        </div>
+    </body>
+</html>
