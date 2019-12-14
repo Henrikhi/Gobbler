@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <title>Gobbler</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <style th:replace="fragments/topBar :: topBarStyle"></style>
+
+    <body>
+        <div th:replace="fragments/topBar :: topBar"></div>
+        <div class="main">
+
+
+            <form name='gobble' th:action="@{/gobbles}" method='POST'>
+                <table>
+                    <tr>
+                        <td>Do you feel like you have something to gobble?:</td>
+                        <td><input type='text' name='gobble' value=''></td>
+                    </tr>
+                    <tr>
+                        <td><input name="submit" type="submit" value="gobble!" /></td>
+                    </tr>
+                </table>
+            </form>
+
+
+
+            <ul>
+                <li th:each="gobble : ${gobbles}" style="margin-top: 100px;">
+                    <div th:replace="fragments/gobbleFrag :: gobble" ></div>
+                </li>
+            </ul>
+        </div>
+    </body>
+</html>

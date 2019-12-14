@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Creating a new gobbler...</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="padding:30px" >
+        
+        <img src="https://raw.githubusercontent.com/Henrikhi/Gobbler/master/Files/gobbler.png" alt="Gobbler" height="170" width="170"/>
+        
+        <h1>Only a few steps until You can begin gobbling!</h1>
+
+        <ul>
+            <li th:each="message : ${messages}">
+                <span th:text="${message}">error message</span>
+            </li>
+        </ul>
+        <form name='newGobbler' action="/newGobbler" method='POST'>
+            <table>
+                <tr>
+                    <td>Gobbler name:</td>
+                    <td><input type='text' name='gobblerName' id='gobblerName' value='' onchange="setPath()" onkeydown ="setPath()"></td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td><input type='text' name='name' value=''></td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><input type='password' name='password' value=''></td>
+                </tr>
+                <tr>
+                    <td>Repeat password:</td>
+                    <td><input type='password' name='password2' value=''></td>
+                </tr>
+
+            </table>
+
+            <p>If you want, you can add a custom path of your liking to your personal Gobbler page.
+                By default it will be "/gobblers/gobblerName"</p> 
+
+            <table>
+                <tr>
+                    <td>Path:</td>
+                    <td>gobblers/</td><td><input type='text' name='gobblerPath' id='gobblerPath' value='gobblerName'></td>
+                </tr>
+                <tr>
+                    <td><input name="submit" type="submit" value="gobble!" /></td>
+                </tr>
+            </table>
+        </form>
+
+        <script type="text/javascript">
+            function setPath() {
+                document.getElementById('gobblerPath').value = document.getElementById('gobblerName').value;
+            }
+        </script>
+
+        <h2>Already have a Gobbler account?</h2>
+        <a href="/login">Continue gobbling!</a>
+
+    </body>
+</html>

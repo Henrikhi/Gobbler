@@ -1,0 +1,78 @@
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+    <style th:fragment="topBarStyle">
+        body {margin:0;}
+
+        nav {
+            overflow: hidden;
+            background-color: #a5b1e8;
+            position: fixed;
+            top: 0;
+            width: 100%;
+
+        }
+
+        nav a {
+            float: left;
+            display: block;
+            color: #5e5e5e;
+            text-align: center;
+            padding: 0px 10px;
+            text-decoration: none;
+            font-size: 20px;
+        }
+
+        nav a:hover {
+            background: #7d88b0;
+            color: black;
+        }
+
+        .main {
+            padding: 30px;
+            margin-top: 50px;
+        }
+    </style>
+
+
+    <body>
+        <nav th:fragment="topBar">
+            <a th:href="@{/gobblers/{gobblerPath}(gobblerPath=${loggedGobbler.gobblerPath})}"> 
+                <div style="border: 2px solid black; padding: 5px;" >
+                    <img th:text="${loggedGobbler.gobblerName}" th:src="@{/images/{id}/content(id=${picture.id})}" alt="my picture" height="50" width="50" />
+                </div>
+            </a>
+            <a href="/feed">
+                <div style="border: 2px solid black; padding: 21px;" >
+                    Feed
+                </div>
+            </a>
+            <a href="/logout">
+                <div style="border: 2px solid black; padding: 21px;" >
+                    Log out
+                </div>
+            </a>
+            <a href="/gobblers/">
+                <div style="border: 2px solid black; padding: 21px;" >
+                    All Gobblers
+                </div>
+            </a>
+            <a href="/follows/">
+                <div style="border: 2px solid black; padding: 21px;" >
+                    Follows
+                </div>
+            </a>
+            <div style=" padding: 21px;" >
+                <form method="GET" action="/search/">
+                    <input type="text" name="entry" id="entry"/>
+                    <input type="submit" value="Search for a fellow Gobbler"/>
+                </form>
+            </div>
+        </nav>
+    </body>
+</html>
