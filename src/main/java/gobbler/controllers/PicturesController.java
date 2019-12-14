@@ -198,7 +198,7 @@ public class PicturesController {
 
         Comment newComment = new Comment();
         newComment.setComment(comment);
-        newComment.setGobblerId(loggedGobbler.getId());
+        newComment.setGobbler(loggedGobbler);
         newComment.setTime(LocalDateTime.now());
         commentRepository.save(newComment);
 

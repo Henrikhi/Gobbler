@@ -66,13 +66,13 @@ public class FeedController {
 
         List<Long> gobblerIds = new ArrayList<>();
         gobblerIds.add(loggedGobbler.getId());
-        
+
         List<Gobbler> whoIFollow = followRepository.findWhoIFollow(loggedGobbler.getId());
         whoIFollow.forEach(gobbler -> {
             gobblerIds.add(gobbler.getId());
         });
 
-        List<Gobble> gobbles = gobbleRepository.findByGobblerIdIn(gobblerIds, pageable);
+        List<Gobble> gobbles = gobbleRepository.findByGobbler_IdIn(gobblerIds, pageable);
 
         model.addAttribute("gobbles", gobbles);
 

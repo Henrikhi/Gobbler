@@ -50,7 +50,7 @@ public class GobblesController {
         Gobble gobble = new Gobble();
         gobble.setContent(gobbleContent);
         gobble.setTime(LocalDateTime.now());
-        gobble.setGobblerId(loggedGobbler.getId());
+        gobble.setGobbler(loggedGobbler);
         gobbleRepository.save(gobble);
 
         return "redirect:/feed";
@@ -101,7 +101,7 @@ public class GobblesController {
 
         Comment newComment = new Comment();
         newComment.setComment(comment);
-        newComment.setGobblerId(loggedGobbler.getId());
+        newComment.setGobbler(loggedGobbler);
         newComment.setTime(LocalDateTime.now());
         commentRepository.save(newComment);
 

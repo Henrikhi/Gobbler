@@ -87,20 +87,21 @@
 
             <ul>
                 <li th:each="gobble : ${gobbles}">
-                    <p th:text="${gobble.gobblerId}"></p>
-                    <p th:text="${gobble.time}"></p>
-                    <p th:text="${gobble.content}"></p>
+                    <a th:href="@{/gobbles/{id}(id=${gobble.id})}" >
+                        <img th:src="@{/images/{id}/content(id=${gobble.gobbler.profilePictureId})}" height="50" width="50"/>
+                        <p th:text="${gobble.gobbler.gobblerName}"></p>
+                        <p th:text="${gobble.time}"></p>
+                        <p th:text="${gobble.content}"></p>
 
-                    <ul>
-                        <li>
-                            <p th:each="comment : ${gobble.comments}">
-                                <span th:text="${comment.gobblerId}"></span>
+                        <ul>
+                            <li th:each="comment : ${gobble.comments}">
+                                <span th:text="${comment.gobbler.gobblerName}"></span>
                                 <span th:text="${comment.time}"></span>
                                 <span th:text="${comment.comment}"></span>
-                            </p>
-                        </li>
-                    </ul>
-                    <form name='comment' th:action="@{/gobbles/{id}(id=${gobble.id})}" method='POST'>
+                            </li>
+                        </ul>
+                    </a>
+                    <form name='comment' th:action="@{/gobbles/{id}/comment(id=${gobble.id})}" method='POST'>
                         <table>
                             <tr>
                                 <td>Do you feel like you have something to gobble about this gobble?:</td>

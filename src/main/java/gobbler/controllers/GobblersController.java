@@ -74,7 +74,7 @@ public class GobblersController {
             model.addAttribute("followers", followers);
             model.addAttribute("following", following);
             Pageable pageable = PageRequest.of(0, 10, Sort.by("time").descending());
-            List<Gobble> gobbles = gobbleRepository.findByGobblerId(loggedGobbler.getId(), pageable);
+            List<Gobble> gobbles = gobbleRepository.findByGobbler_Id(loggedGobbler.getId(), pageable);
 
             model.addAttribute("gobbles", gobbles);
 
@@ -90,7 +90,7 @@ public class GobblersController {
             model.addAttribute("followers", followers);
             model.addAttribute("following", following);
             Pageable pageable = PageRequest.of(0, 10, Sort.by("time").descending());
-            List<Gobble> gobbles = gobbleRepository.findByGobblerId(searchedGobbler.getId(), pageable);
+            List<Gobble> gobbles = gobbleRepository.findByGobbler_Id(searchedGobbler.getId(), pageable);
 
             model.addAttribute("gobbles", gobbles);
 

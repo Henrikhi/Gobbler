@@ -11,18 +11,19 @@
         <div th:replace="fragments/topBar :: topBar"></div>
         <div class="main">
 
-            
+
             <h1>This is a single gobble</h1>
 
-            
-            <p th:text="${gobble.gobblerId}"></p>
+            <img th:src="@{/images/{id}/content(id=${gobble.gobbler.profilePictureId})}" height="50" width="50"/>
+            <p th:text="${gobble.gobbler.gobblerName}"></p>
             <p th:text="${gobble.time}"></p>
             <p th:text="${gobble.content}"></p>
 
             <ul>
-                <li th:each="comment : ${gobble.comments}" >
-                    <p th:text="${comment.time}" ></p>
-                    <p th:text="${comment.comment}" ></p>
+                <li th:each="comment : ${gobble.comments}">
+                    <span th:text="${comment.gobbler.gobblerName}"></span>
+                    <span th:text="${comment.time}"></span>
+                    <span th:text="${comment.comment}"></span>
                 </li>
             </ul>
 
