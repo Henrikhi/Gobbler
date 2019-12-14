@@ -27,10 +27,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().sameOrigin();
 
         http.authorizeRequests()
-                .antMatchers("/h2-console", "/h2-console/**").permitAll()
+                .antMatchers("/h2-console", "/h2-console/**").denyAll()
+                //                .antMatchers("/h2-console", "/h2-console/**").permitAll()
                 .antMatchers("/newGobbler", "/newGobbler/*").permitAll()
                 .anyRequest().authenticated()
-//                .anyRequest().permitAll()
+                //                .anyRequest().permitAll()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()

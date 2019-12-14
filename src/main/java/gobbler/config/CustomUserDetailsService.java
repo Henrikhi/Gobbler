@@ -29,65 +29,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private PictureRepository pictureRepository;
-    
-    @Autowired
-    private FollowRepository followRepository;
-
-    @PostConstruct
-    public void init() throws IOException {
-
-        if (gobblerRepository.findByGobblerName("kalkkuna") == null) {
-
-            Gobbler gobbler = new Gobbler();
-            gobbler.setGobblerName("kalkkuna");
-            gobbler.setName("herra kalkkuna");
-            gobbler.setGobblerPath("kalkkuna");
-            gobbler.setPassword(passwordEncoder.encode("kalkkuna"));
-            gobblerRepository.save(gobbler);
-
-            Gobbler gobbler2 = new Gobbler();
-            gobbler2.setGobblerName("kalkkuna2");
-            gobbler2.setName("rouva kalkkuna2");
-            gobbler2.setGobblerPath("kalkkuna2");
-            gobbler2.setPassword(passwordEncoder.encode("kalkkuna2"));
-            gobblerRepository.save(gobbler2);
-            
-            Follow follow = new Follow();
-            follow.setFollower(gobbler);
-            follow.setFollowing(gobbler2);
-            follow.setTime(LocalDateTime.now());
-            followRepository.save(follow);
-            
-
-            String workingDirectory = System.getProperty("user.dir");
-            File file = new File("./src/main/resources/public/profile.png");
-            byte[] fileContent = Files.readAllBytes(file.toPath());
-
-            Picture picture = new Picture();
-            picture.setInfo("Default gobbler picture.");
-            picture.setContent(fileContent);
-            picture.setProfilePicture(true);
-            picture.setGobblerId(gobbler.getId());
-            pictureRepository.save(picture);
-
-            Picture picture2 = new Picture();
-            picture2.setInfo("Default gobbler picture.");
-            picture2.setContent(fileContent);
-            picture2.setProfilePicture(true);
-            picture2.setGobblerId(gobbler2.getId());
-            pictureRepository.save(picture2);
-            
-            gobbler.setProfilePictureId(picture.getId());
-            gobbler2.setProfilePictureId(picture2.getId());
-            gobblerRepository.save(gobbler);
-            gobblerRepository.save(gobbler2);
-            
-
-        }
-    }
-
     @Override
     public UserDetails loadUserByUsername(String gobblerName) throws UsernameNotFoundException {
         Gobbler account = gobblerRepository.findByGobblerName(gobblerName);
