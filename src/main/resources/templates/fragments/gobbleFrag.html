@@ -14,7 +14,7 @@
                 <img th:src="@{/images/{id}/content(id=${gobble.gobbler.profilePictureId})}" height="50" width="50" th:text="${gobble.gobbler.gobblerName}"/>
             </a>
             <a th:href="@{/gobbles/{id}(id=${gobble.id})}" >
-                <p>Posted: <span th:text="${gobble.time}"></span></p>
+                <p>Posted: <span th:text="${gobble.dateTime}"></span></p>
             </a>
             <h3 th:text="${gobble.content}"></h3>
             <a th:href="@{/gobbles/{id}/pecks(id=${gobble.id})}" >
@@ -31,7 +31,7 @@
                     <a th:href="@{/gobblers/{id}(id=${comment.gobbler.gobblerPath})}" >
                         <img th:src="@{/images/{id}/content(id=${comment.gobbler.profilePictureId})}" height="50" width="50" th:text="${comment.gobbler.gobblerName}"/>
                     </a>
-                    <p>Posted: <span th:text="${gobble.time}"></span></p>
+                    <p>Posted: <span th:text="${gobble.dateTime}"></span></p>
                     <h5 th:text="${comment.comment}" ></h5>
                 </li>
             </ul>

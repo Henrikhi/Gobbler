@@ -50,7 +50,7 @@ public class GobblesController {
         }
         Gobble gobble = new Gobble();
         gobble.setContent(gobbleContent);
-        gobble.setTime(LocalDateTime.now());
+        gobble.setDateTime(LocalDateTime.now());
         gobble.setGobbler(loggedGobbler);
         gobbleRepository.save(gobble);
 
@@ -103,7 +103,7 @@ public class GobblesController {
         Comment newComment = new Comment();
         newComment.setComment(comment);
         newComment.setGobbler(loggedGobbler);
-        newComment.setTime(LocalDateTime.now());
+        newComment.setDateTime(LocalDateTime.now());
         commentRepository.save(newComment);
 
         Gobble gobble = gobbleRepository.getOne(id);

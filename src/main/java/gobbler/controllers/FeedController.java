@@ -62,7 +62,7 @@ public class FeedController {
         model.addAttribute("loggedGobbler", loggedGobbler);
         model.addAttribute("picture", profilePicture);
 
-        Pageable pageable = PageRequest.of(pageNum, 25, Sort.by("time").descending());
+        Pageable pageable = PageRequest.of(pageNum, 25, Sort.by("dateTime").descending());
 
         List<Long> gobblerIds = new ArrayList<>();
         gobblerIds.add(loggedGobbler.getId());

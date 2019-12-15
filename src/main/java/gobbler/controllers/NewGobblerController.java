@@ -31,10 +31,10 @@ public class NewGobblerController {
         if (messages.isEmpty()) {
             messages.add("new Gobbler created!");
             model.addAttribute("messages", messages);
-            return "/newGobbler";
+            return "newGobbler";
         } else {
             model.addAttribute("messages", messages);
-            return "/newGobbler";
+            return "newGobbler";
         }
     }
 }

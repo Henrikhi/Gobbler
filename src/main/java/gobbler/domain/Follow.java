@@ -20,6 +20,6 @@ public class Follow extends AbstractPersistable<Long> {
     @ManyToOne
     Gobbler following;
 
-    LocalDateTime time;
+    LocalDateTime dateTime;
 
 }

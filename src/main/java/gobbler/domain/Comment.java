@@ -17,6 +17,6 @@ public class Comment extends AbstractPersistable<Long> {
     @ManyToOne
     Gobbler gobbler;
     String comment;
-    LocalDateTime time;
+    LocalDateTime dateTime;
 
 }

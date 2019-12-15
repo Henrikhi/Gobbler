@@ -29,7 +29,7 @@
                     <p th:text="${gobble.gobbler.gobblerName}"></p>
                 </a>
                 <a th:href="@{/gobbles/{id}(id=${gobble.id})}" >
-                    <p>Posted: <span th:text="${gobble.time}"></span></p>
+                    <p>Posted: <span th:text="${gobble.dateTime}"></span></p>
                 </a>
                 <h3 th:text="${gobble.content}"></h3>
             </div>

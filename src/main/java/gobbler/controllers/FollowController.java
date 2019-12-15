@@ -65,7 +65,7 @@ public class FollowController {
             Follow follow = new Follow();
             follow.setFollower(loggedGobbler);
             follow.setFollowing(gobbler);
-            follow.setTime(LocalDateTime.now());
+            follow.setDateTime(LocalDateTime.now());
             followRepository.save(follow);
         }
 

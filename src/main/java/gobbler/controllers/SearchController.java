@@ -3,8 +3,6 @@ package gobbler.controllers;
 import gobbler.domain.Gobbler;
 import gobbler.repositories.GobblerRepository;
 import gobbler.repositories.PictureRepository;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
