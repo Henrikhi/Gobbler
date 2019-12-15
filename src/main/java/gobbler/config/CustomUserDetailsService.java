@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import gobbler.repositories.GobblerRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -17,8 +16,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Autowired
     private GobblerRepository gobblerRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserDetails loadUserByUsername(String gobblerName) throws UsernameNotFoundException {

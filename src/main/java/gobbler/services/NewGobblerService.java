@@ -17,7 +17,7 @@ import org.springframework.stereotype.Service;
 public class NewGobblerService {
 
     @Autowired
-    PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private GobblerRepository gobblerRepository;
